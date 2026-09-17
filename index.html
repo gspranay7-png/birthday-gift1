@@ -1,0 +1,815 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>19th Birthday Surprise 🎂</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3, #8e2de2);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ---------- BACKGROUND ---------- */
+
+.bg-heart {
+    position: fixed;
+    font-size: 25px;
+    animation: floatHeart 8s linear infinite;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px 20px;
+    position: relative;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 10vw, 100px);
+    animation: glow 2s infinite alternate;
+}
+
+.hero h2 {
+    font-size: clamp(25px, 5vw, 50px);
+    margin: 15px 0;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 700px;
+    line-height: 1.7;
+}
+
+.age {
+    font-size: clamp(100px, 25vw, 220px);
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 0 30px white;
+    animation: heartbeat 1.5s infinite;
+}
+
+.start-btn {
+    margin-top: 35px;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 50px;
+    background: white;
+    color: #e91e63;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 30px #0004;
+    transition: 0.3s;
+}
+
+.start-btn:hover {
+    transform: scale(1.1);
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px white; }
+    to { text-shadow: 0 0 40px #fff, 0 0 80px #ffeb3b; }
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* ---------- SECTION ---------- */
+
+.section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.section h2 {
+    font-size: clamp(30px, 6vw, 55px);
+    margin-bottom: 15px;
+}
+
+.section-subtitle {
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+/* ---------- PHOTOS ---------- */
+
+.gallery {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.photo {
+    height: 280px;
+    overflow: hidden;
+    border-radius: 25px;
+    border: 3px solid #ffffff66;
+    box-shadow: 0 15px 35px #0004;
+    transition: 0.5s;
+}
+
+.photo:hover {
+    transform: translateY(-10px) rotate(2deg) scale(1.03);
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ---------- GIFTS ---------- */
+
+.gifts {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 25px;
+}
+
+.gift {
+    height: 180px;
+    background: #ffffff22;
+    backdrop-filter: blur(10px);
+    border: 2px solid #ffffff55;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: 0.4s;
+    box-shadow: 0 15px 30px #0003;
+}
+
+.gift:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: #ffffff35;
+}
+
+.gift-icon {
+    font-size: 65px;
+    animation: giftBounce 2s infinite;
+}
+
+.gift-number {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@keyframes giftBounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* ---------- POPUP ---------- */
+
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000b;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #ff758c, #8e2de2);
+    width: min(600px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 30px;
+    padding: 35px;
+    text-align: center;
+    animation: popupOpen 0.5s ease;
+    box-shadow: 0 20px 70px #0008;
+}
+
+.popup-content h2 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.popup-content p {
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.popup-photo {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin: 20px 0;
+}
+
+.close {
+    margin-top: 25px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #e91e63;
+}
+
+@keyframes popupOpen {
+    from {
+        transform: scale(0.5) rotate(-5deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* ---------- FINAL MESSAGE ---------- */
+
+.final {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 30px;
+}
+
+.final h2 {
+    font-size: clamp(40px, 8vw, 80px);
+}
+
+.final p {
+    max-width: 700px;
+    font-size: 20px;
+    line-height: 1.8;
+    margin-top: 25px;
+}
+
+.love {
+    font-size: 70px;
+    animation: heartbeat 1s infinite;
+    margin-top: 30px;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #0003;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:600px) {
+    .gift {
+        height: 150px;
+    }
+
+    .gift-icon {
+        font-size: 50px;
+    }
+
+    .photo {
+        height: 250px;
+    }
+
+    .popup-content {
+        padding: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating hearts -->
+<div class="bg-heart" style="left:5%;animation-delay:0s;">❤️</div>
+<div class="bg-heart" style="left:15%;animation-delay:2s;">💖</div>
+<div class="bg-heart" style="left:30%;animation-delay:4s;">💕</div>
+<div class="bg-heart" style="left:50%;animation-delay:1s;">💗</div>
+<div class="bg-heart" style="left:70%;animation-delay:3s;">💓</div>
+<div class="bg-heart" style="left:85%;animation-delay:5s;">❤️</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div style="font-size:40px;">🎈 🎉 🎈</div>
+
+    <h1>Happy Birthday!</h1>
+
+    <div class="age">19</div>
+
+    <h2>🎂 Amazing 19th Birthday 🎂</h2>
+
+    <p>
+        Today is not just another day...
+        It's the beginning of another beautiful chapter of your life. ❤️
+    </p>
+
+    <button class="start-btn" onclick="startSurprise()">
+        🎁 Start The Surprise
+    </button>
+
+</section>
+
+
+<!-- PHOTO SECTION -->
+
+<section class="section" id="memories">
+
+    <h2>📸 Beautiful Memories</h2>
+
+    <p class="section-subtitle">
+        Every picture holds a special memory ❤️
+    </p>
+
+    <div class="gallery">
+
+        <div class="photo">
+            <img src="nis1.jpeg" alt="Memory 1">
+        </div>
+
+        <div class="photo">
+            <img src="nis2.jpeg" alt="Memory 2">
+        </div>
+
+        <div class="photo">
+            <img src="nis3.jpeg" alt="Memory 3">
+        </div>
+
+        <div class="photo">
+            <img src="nis4.jpeg" alt="Memory 4">
+        </div>
+
+        <div class="photo">
+            <img src="nis5.jpeg" alt="Memory 5">
+        </div>
+
+        <div class="photo">
+            <img src="nis6.jpeg" alt="Memory 6">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- 19 GIFTS -->
+
+<section class="section">
+
+    <h2>🎁 19 Surprise Gifts 🎁</h2>
+
+    <p class="section-subtitle">
+        Click every gift to discover your surprises!
+    </p>
+
+    <div class="gifts">
+
+        <div class="gift" onclick="openGift(1)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #1</div>
+        </div>
+
+        <div class="gift" onclick="openGift(2)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #2</div>
+        </div>
+
+        <div class="gift" onclick="openGift(3)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #3</div>
+        </div>
+
+        <div class="gift" onclick="openGift(4)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #4</div>
+        </div>
+
+        <div class="gift" onclick="openGift(5)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #5</div>
+        </div>
+
+        <div class="gift" onclick="openGift(6)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #6</div>
+        </div>
+
+        <div class="gift" onclick="openGift(7)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #7</div>
+        </div>
+
+        <div class="gift" onclick="openGift(8)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #8</div>
+        </div>
+
+        <div class="gift" onclick="openGift(9)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #9</div>
+        </div>
+
+        <div class="gift" onclick="openGift(10)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #10</div>
+        </div>
+
+        <div class="gift" onclick="openGift(11)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #11</div>
+        </div>
+
+        <div class="gift" onclick="openGift(12)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #12</div>
+        </div>
+
+        <div class="gift" onclick="openGift(13)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #13</div>
+        </div>
+
+        <div class="gift" onclick="openGift(14)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #14</div>
+        </div>
+
+        <div class="gift" onclick="openGift(15)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #15</div>
+        </div>
+
+        <div class="gift" onclick="openGift(16)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #16</div>
+        </div>
+
+        <div class="gift" onclick="openGift(17)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #17</div>
+        </div>
+
+        <div class="gift" onclick="openGift(18)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">Gift #18</div>
+        </div>
+
+        <div class="gift" onclick="openGift(19)">
+            <div class="gift-icon">🎁</div>
+            <div class="gift-number">FINAL GIFT 🎉</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- POPUP -->
+
+<div class="popup" id="popup">
+
+    <div class="popup-content">
+
+        <h2 id="giftTitle"></h2>
+
+        <div id="giftEmoji" style="font-size:80px;"></div>
+
+        <img id="giftPhoto"
+             class="popup-photo"
+             style="display:none;"
+             alt="Birthday Memory">
+
+        <p id="giftMessage"></p>
+
+        <button class="close" onclick="closeGift()">
+            Close ❤️
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FINAL -->
+
+<section class="final">
+
+    <h2>🎉 Happy Birthday nisarga! 🎉</h2>
+
+    <p>
+        May your 19th year be filled with happiness, adventures,
+        success, laughter and countless beautiful memories.
+
+        Keep smiling, keep dreaming and keep being the amazing person
+        you are. ❤️
+
+        <br><br>
+
+        This little website is just a small reminder that
+        you are truly special. ✨
+    </p>
+
+    <div class="love">❤️</div>
+
+</section>
+
+
+<footer>
+    Made with ❤️ especially for your 19th Birthday 🎂
+</footer>
+
+
+<script>
+
+/* ---------- CONFETTI ---------- */
+
+function startSurprise() {
+
+    document.getElementById("memories")
+        .scrollIntoView({behavior:"smooth"});
+
+    createConfetti();
+}
+
+function createConfetti() {
+
+    for(let i = 0; i < 120; i++) {
+
+        const confetti = document.createElement("div");
+
+        confetti.innerHTML =
+            ["🎉","✨","🎊","💖","⭐","❤️"][Math.floor(Math.random()*6)];
+
+        confetti.style.position = "fixed";
+        confetti.style.left = Math.random()*100 + "vw";
+        confetti.style.top = "-30px";
+        confetti.style.fontSize =
+            (15 + Math.random()*25) + "px";
+        confetti.style.zIndex = "2000";
+        confetti.style.pointerEvents = "none";
+
+        document.body.appendChild(confetti);
+
+        const duration = 2 + Math.random()*4;
+
+        confetti.animate([
+            {
+                transform:"translateY(0) rotate(0deg)",
+                opacity:1
+            },
+            {
+                transform:
+                    `translateY(110vh) rotate(${Math.random()*720}deg)`,
+                opacity:0
+            }
+        ], {
+            duration:duration*1000,
+            easing:"ease-out"
+        });
+
+        setTimeout(() => {
+            confetti.remove();
+        }, duration*1000);
+    }
+}
+
+
+/* ---------- 19 GIFTS ---------- */
+
+const gifts = {
+
+1: {
+    title:"🎁 Gift #1",
+    emoji:"🌟",
+    message:"Your first surprise: You deserve all the happiness in the world. Never forget how special you are!"
+},
+
+2: {
+    title:"🎁 Gift #2",
+    emoji:"😊",
+    message:"A lifetime supply of smiles! May you always have a reason to smile every single day."
+},
+
+3: {
+    title:"🎁 Gift #3",
+    emoji:"🍫",
+    message:"🍫 CHOCOLATE! Because birthdays without chocolate should be illegal!"
+},
+
+4: {
+    title:"🎁 Gift #4",
+    emoji:"🌹",
+    message:"🌹 One virtual rose for one wonderful person. May your life always be beautiful."
+},
+
+5: {
+    title:"📸 Gift #5 — Memory",
+    emoji:"📸",
+    message:"Here is one of your special memories ❤️",
+    photo:"nis7.jpeg"
+},
+
+6: {
+    title:"🎁 Gift #6",
+    emoji:"🎧",
+    message:"🎶 May your life always have a beautiful soundtrack filled with happiness."
+},
+
+7: {
+    title:"🎁 Gift #7",
+    emoji:"🧸",
+    message:"🧸 A virtual teddy bear hug for your special day! Sending you the biggest hug!"
+},
+
+8: {
+    title:"🎁 Gift #8",
+    emoji:"☀️",
+    message:"May every morning bring you new opportunities, new dreams and new reasons to be happy."
+},
+
+9: {
+    title:"🎁 Gift #9",
+    emoji:"💎",
+    message:"You are more precious than any diamond. Never underestimate your own worth."
+},
+
+10: {
+    title:"🎁 Gift #10 — Photo Surprise",
+    emoji:"📷",
+    message:"Halfway to 19 surprises! Here's another beautiful memory ❤️",
+    photo:"nis8.jpeg"
+},
+
+11: {
+    title:"🎁 Gift #11",
+    emoji:"🚀",
+    message:"🚀 Dream BIG! Your future is waiting for you. Keep going and never give up."
+},
+
+12: {
+    title:"🎁 Gift #12",
+    emoji:"🍰",
+    message:"🎂 One imaginary birthday cake just for you! Make a wish... ✨"
+},
+
+13: {
+    title:"🎁 Gift #13",
+    emoji:"💌",
+    message:"A little message from the heart: Thank you for being such an amazing person. ❤️"
+},
+
+14: {
+    title:"🎁 Gift #14",
+    emoji:"🌈",
+    message:"🌈 May your life be as colorful, exciting and beautiful as a rainbow."
+},
+
+15: {
+    title:"🎁 Gift #15 — Special Memory",
+    emoji:"❤️",
+    message:"15 surprises down! Here's a special photo to make this birthday even more memorable.",
+    photo:"photos/photo3.jpg"
+},
+
+16: {
+    title:"🎁 Gift #16",
+    emoji:"👑",
+    message:"👑 Today you are officially the birthday king/queen! Enjoy your special day!"
+},
+
+17: {
+    title:"🎁 Gift #17",
+    emoji:"✨",
+    message:"✨ Your next chapter starts now. Make your 19th year unforgettable!"
+},
+
+18: {
+    title:"🎁 Gift #18",
+    emoji:"🥳",
+    message:"🥳 Almost there! One more surprise after this. Get ready!"
+},
+
+19: {
+    title:"🎉 FINAL GIFT 🎉",
+    emoji:"🎂❤️🎁",
+    message:
+        "You made it to the FINAL SURPRISE! ❤️\n\n" +
+        "Happy 19th Birthday! 🎂\n\n" +
+        "May this year bring you incredible memories, endless happiness, success and everything your heart wishes for.\n\n" +
+        "Always remember: you are loved, you are valued and you are SPECIAL. ❤️✨"
+}
+
+};
+
+
+function openGift(number) {
+
+    const gift = gifts[number];
+
+    document.getElementById("giftTitle").innerText =
+        gift.title;
+
+    document.getElementById("giftEmoji").innerText =
+        gift.emoji;
+
+    document.getElementById("giftMessage").innerText =
+        gift.message;
+
+    const photo =
+        document.getElementById("giftPhoto");
+
+    if(gift.photo) {
+
+        photo.src = gift.photo;
+        photo.style.display = "block";
+
+    } else {
+
+        photo.style.display = "none";
+
+    }
+
+    document.getElementById("popup").style.display =
+        "flex";
+
+    createConfetti();
+
+}
+
+
+function closeGift() {
+
+    document.getElementById("popup").style.display =
+        "none";
+
+}
+
+
+/* Close popup by clicking outside */
+
+document.getElementById("popup").addEventListener(
+    "click",
+    function(e) {
+
+        if(e.target === this) {
+            closeGift();
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
